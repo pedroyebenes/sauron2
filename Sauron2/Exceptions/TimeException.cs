@@ -1,5 +1,5 @@
 ﻿using System;
-namespace Sauron2
+namespace Sauron2.Exceptions
 {
     public class TimeException : Exception
     {

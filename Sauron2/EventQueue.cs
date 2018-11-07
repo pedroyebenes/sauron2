@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics.Contracts;
 
 namespace Sauron2
 {
@@ -16,7 +15,7 @@ namespace Sauron2
             Times = new SortedSet<ulong>();
             DictQueues = new Dictionary<ulong, Queue<Event>>();
             Count = 0;
-            LastTime = ulong.MinValue;
+            LastTime = 0;
         }
 
         public bool IsNotEmpty()
@@ -26,23 +25,17 @@ namespace Sauron2
 
         public void Add(Event e)
         {
-            ulong time = e.GetTime();
+            ulong time = e.Time;
             if (time < LastTime)
             {
-                throw new TimeException("Event time " + time + "< lastTime " + LastTime);
+                throw new Exceptions.TimeException("Event time " + time + "< lastTime " + LastTime);
             }
-
-            if (DictQueues.ContainsKey(time))
-            {
-                DictQueues[time].Enqueue(e);
-            }
-            else
+            if (!DictQueues.ContainsKey(time))
             {
                 Times.Add(time);
-                Queue<Event> q = new Queue<Event>();
-                q.Enqueue(e);
-                DictQueues.Add(time, q);
+                DictQueues.Add(time, new Queue<Event>());
             }
+            DictQueues[time].Enqueue(e);
             Count += 1;
         }
 
