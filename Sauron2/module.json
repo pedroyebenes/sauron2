@@ -1,3 +1,30 @@
 ﻿{
-
+    "Modules": [
+        {
+            "Name": "Sauron", 
+            "Gates": 2
+        },
+        {
+            "Name": "Melkor", 
+            "Gates": 2
+        },
+        {
+            "Name": "Iluvatar", 
+            "Gates": 2
+        }
+    ],
+    "Connections": [
+        { 
+            "ModuleA": "Sauron", "IndexA": 0, "PortA": 0, 
+            "ModuleB": "Melkor", "IndexB": 0, "PortB": 0
+        },
+        { 
+            "ModuleA": "Sauron", "IndexA": 0, "PortA": 1, 
+            "ModuleB": "Iluvatar", "IndexB": 0, "PortB": 0 
+        },
+        { 
+            "ModuleA": "Melkor", "IndexA": 0, "PortA": 1, 
+            "ModuleB": "Iluvatar", "IndexB": 0, "PortB": 1 
+        }
+    ]
 }

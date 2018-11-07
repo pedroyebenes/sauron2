@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Json;
 
-namespace Sauron2
+namespace Sauron2.Core
 {
     public class SimulationEnvironment
     {
         public EventQueue EventQueue { get; private set; }
-        private readonly Dictionary<string, List<Module>> DictModules;
+        public Dictionary<string, List<Module>> DictModules { get; }
         public ulong Time { get; private set; }
 
         public SimulationEnvironment()
@@ -30,6 +30,14 @@ namespace Sauron2
             DictModules[module.Name].Add(module);
         }
 
+        public void AddModules(List<Module> lm)
+        {
+            foreach (Module m in lm)
+            {
+                AddModule(m);
+            }
+        }
+
         public Module GetModule(string name, int index)
         {
             Module m = null;
@@ -43,13 +51,47 @@ namespace Sauron2
             return m;
         }
 
+        void ConnectModulesWithPreConnection(PreConnection pc)
+        {
+            Module mA = GetModule(pc.ModuleA, pc.IndexA);
+            Module mB = GetModule(pc.ModuleB, pc.IndexB);
+
+            Connection.Connect(mA, pc.PortA, mB, pc.PortB);
+        }
+
+        public void ConnectModules(List<PreConnection> pl)
+        {
+            foreach (PreConnection pc in pl)
+            {
+                ConnectModulesWithPreConnection(pc);
+            }
+        }
+
         public void Run()
         {
+            //Initialize
+            foreach(List<Module> lm in DictModules.Values)
+            {
+                foreach(Module m in lm)
+                {
+                    m.Initialize();
+                }
+            }
+
             while (EventQueue.IsNotEmpty())
             {
                 Event e = EventQueue.GetNextEvent();
                 Time = e.Time;
                 e.DestModule.HandleEvent(e);
+            }
+
+            //Finish
+            foreach (List<Module> lm in DictModules.Values)
+            {
+                foreach (Module m in lm)
+                {
+                    m.Finish();
+                }
             }
         }
     }

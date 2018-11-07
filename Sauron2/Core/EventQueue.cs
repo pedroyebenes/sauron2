@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Sauron2
+namespace Sauron2.Core
 {
     public class EventQueue
     {

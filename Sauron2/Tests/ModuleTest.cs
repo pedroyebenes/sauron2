@@ -1,5 +1,7 @@
 ﻿using NUnit.Framework;
 using System;
+using Sauron2.Core;
+
 namespace Sauron2.Tests
 {
     [TestFixture()]

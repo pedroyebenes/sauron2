@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Json;
 
+using Sauron2.Core;
+
 namespace Sauron2
 {
     class MainClass
@@ -12,15 +14,16 @@ namespace Sauron2
             Console.WriteLine("Hail SAURON!");
             SimulationEnvironment simEnv = new SimulationEnvironment();
 
-            simEnv.AddModule(new Module("m", 2));
-            simEnv.AddModule(new Module("m", 2));
+            JSONParser jp = JSONParser.WithFilename("../../module.json");
+            List<Module> ml = jp.GetModules();
+            simEnv.AddModules(ml);
 
-            Module a = simEnv.GetModule("m", 0);
-            Module b = simEnv.GetModule("m", 1);
-            Connection.Connect(a, 0, b, 1);
+            List<PreConnection> pl = jp.GetConnections();
+            simEnv.ConnectModules(pl);
 
-            Event e = new Event();
-            a.Send(e, 0, 10);
+            ml[0].Send(new Event(), 0, 0);
+            ml[0].Send(new Event(), 1, 0);
+            ml[1].Send(new Event(), 1, 0);
 
             simEnv.Run();
         }

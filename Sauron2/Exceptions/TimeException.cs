@@ -3,7 +3,11 @@ namespace Sauron2.Exceptions
 {
     public class TimeException : Exception
     {
-        public TimeException(string message)
+        public TimeException()
+        {
+        }
+
+        public TimeException(string message) : base(message)
         {
         }
     }

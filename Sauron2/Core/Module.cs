@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Json;
-namespace Sauron2
+
+namespace Sauron2.Core
 {
     public class Module
     {
@@ -65,8 +66,8 @@ namespace Sauron2
 
         public void HandleEvent(Event e)
         {
-            Console.WriteLine("T={0} Module {1}, Port {2} -- Handling Event(id {3}, time {4})", SimEnvir.Time, ID, e.DestPort, e.ID, e.Time);
-            if (SimEnvir.Time < 100) //FIXME remove
+            Console.WriteLine("T={0} Module {1}_{2}, Port {3} -- Handling Event(id {4}, time {5})", SimEnvir.Time, Name, Index, e.DestPort, e.ID, e.Time);
+            if (SimEnvir.Time < 10) //FIXME remove
             {
                 Send(e, e.DestPort, SimEnvir.Time+1);
             }

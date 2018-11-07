@@ -1,5 +1,5 @@
 ﻿using System;
-namespace Sauron2
+namespace Sauron2.Core
 {
     public class Event
     {
