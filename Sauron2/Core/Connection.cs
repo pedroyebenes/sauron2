@@ -30,11 +30,11 @@ namespace Sauron2.Core
         {
             if (mA.Gate[portA] != null)
             {
-                throw new Exceptions.PortAlreadyConnectedException("Port " + portA + " in module " + mA.Name + "("+ mA.Index + ") not connected"); 
+                throw new Exceptions.PortAlreadyConnectedException("Port " + portA + " in module " + mA.Name + "("+ mA.Index + ") already connected"); 
             }
             if (mB.Gate[portB] != null)
             {
-                throw new Exceptions.PortAlreadyConnectedException("Port " + portB + " in module " + mB.Name + "(" + mB.Index + ") not connected");
+                throw new Exceptions.PortAlreadyConnectedException("Port " + portB + " in module " + mB.Name + "(" + mB.Index + ") already connected");
             }
             mA.Gate[portA] = new Connection(mB, portB);
             mB.Gate[portB] = new Connection(mA, portA);

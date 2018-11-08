@@ -26,19 +26,22 @@ namespace Sauron2.Core
             JSONFile = (JsonObject)JsonValue.Parse(jsonString);
         }
 
-        public static JSONParser WithFilename(string fileName)
+        public static string ReadJSONFile(string fileName)
         {
-            //try
-            //{
-            using (StreamReader r = new StreamReader(fileName))
+            string s = null;
+            try
             {
-                return new JSONParser(r.ReadToEnd());
+                using (StreamReader r = new StreamReader(fileName))
+                {
+                    s = r.ReadToEnd();
+                }
             }
-            //}
-            //catch (IOException ioex)
-            //{
-
-            //}
+            catch (IOException ioex)
+            {
+                Console.WriteLine(ioex.Message); //FIXME
+                System.Environment.Exit(1);
+            }
+            return s;
         }
 
         JsonValue GetValueFromObject(JsonObject jo, string key)
@@ -57,7 +60,7 @@ namespace Sauron2.Core
             string name = (string)GetValueFromObject(jo, ModuleName);
             int gates = (int)GetValueFromObject(jo, ModuleGates);
 
-            return new Module(name, gates);
+            return new Node(name, gates); //TODO how does it know the type?
         }
 
         public List<Module> GetModules()

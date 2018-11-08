@@ -53,6 +53,7 @@
     <Compile Include="Core\JSONParser.cs" />
     <Compile Include="Core\Module.cs" />
     <Compile Include="Core\SimulationEnvironment.cs" />
+    <Compile Include="Node.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Tests\" />

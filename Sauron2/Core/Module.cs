@@ -5,7 +5,7 @@ using System.Json;
 
 namespace Sauron2.Core
 {
-    public class Module
+    public abstract class Module
     {
         internal static ulong IDCount = 0;
 
@@ -16,7 +16,7 @@ namespace Sauron2.Core
 
         public List<Connection> Gate { get; set; }
 
-        public Module(string name, int gates)
+        protected Module(string name, int gates)
         {
             ID = IDCount;
             IDCount += 1;
@@ -29,7 +29,7 @@ namespace Sauron2.Core
             }
         }
 
-        public Module(string jsonString)
+        protected Module(string jsonString)
         {
             JsonObject jo = (JsonObject)JsonValue.Parse(jsonString);
             if (jo.TryGetValue(nameof(Name), out JsonValue value))
@@ -49,7 +49,6 @@ namespace Sauron2.Core
 
         public void Send(Event e, int port, ulong time)
         {
-            //TODO check connections
             e.Time = time;
             e.SrcModule = this;
             e.SrcPort = port;
@@ -59,24 +58,19 @@ namespace Sauron2.Core
             SimEnvir.EventQueue.Add(e);
         }
 
-        public void Initialize()
+        public void ScheduleAt(Event e, ulong time)
         {
-            Console.WriteLine("Initializing");
+            e.Time = time;
+            e.SrcModule = this;
+            e.SrcPort = -1;
+            e.DestModule = this;
+            e.DestPort = -1;
+
+            SimEnvir.EventQueue.Add(e);
         }
 
-        public void HandleEvent(Event e)
-        {
-            Console.WriteLine("T={0} Module {1}_{2}, Port {3} -- Handling Event(id {4}, time {5})", SimEnvir.Time, Name, Index, e.DestPort, e.ID, e.Time);
-            if (SimEnvir.Time < 10) //FIXME remove
-            {
-                Send(e, e.DestPort, SimEnvir.Time+1);
-            }
-        }
-
-        public void Finish()
-        {
-            Console.WriteLine("Finishing");
-        }
-
+        abstract public void Initialize();
+        abstract public void HandleEvent(Event e);
+        abstract public void Finish();
     }
 }

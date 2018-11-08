@@ -10,11 +10,34 @@ namespace Sauron2.Core
         public Dictionary<string, List<Module>> DictModules { get; }
         public ulong Time { get; private set; }
 
-        public SimulationEnvironment()
+        readonly string TopologyFileName;
+
+        public SimulationEnvironment(string topologyFileName)
         {
             EventQueue = new EventQueue();
             DictModules = new Dictionary<string, List<Module>>();
             Time = 0;
+            TopologyFileName = topologyFileName;
+        }
+
+        public void Init()
+        {
+            JSONParser jp = new JSONParser(JSONParser.ReadJSONFile(TopologyFileName));
+
+            List<Module> ml = jp.GetModules();
+            List<PreConnection> pl = jp.GetConnections();
+
+            AddModules(ml);
+            ConnectModules(pl);
+
+            //Initialize modules
+            foreach (List<Module> lm in DictModules.Values)
+            {
+                foreach (Module m in lm)
+                {
+                    m.Initialize();
+                }
+            }
         }
 
         public void AddModule(Module module)
@@ -69,14 +92,6 @@ namespace Sauron2.Core
 
         public void Run()
         {
-            //Initialize
-            foreach(List<Module> lm in DictModules.Values)
-            {
-                foreach(Module m in lm)
-                {
-                    m.Initialize();
-                }
-            }
 
             while (EventQueue.IsNotEmpty())
             {

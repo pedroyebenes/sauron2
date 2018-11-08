@@ -12,19 +12,9 @@ namespace Sauron2
         public static void Main(string[] args)
         {
             Console.WriteLine("Hail SAURON!");
-            SimulationEnvironment simEnv = new SimulationEnvironment();
+            SimulationEnvironment simEnv = new SimulationEnvironment("../../module1.json");
 
-            JSONParser jp = JSONParser.WithFilename("../../module.json");
-            List<Module> ml = jp.GetModules();
-            simEnv.AddModules(ml);
-
-            List<PreConnection> pl = jp.GetConnections();
-            simEnv.ConnectModules(pl);
-
-            ml[0].Send(new Event(), 0, 0);
-            ml[0].Send(new Event(), 1, 0);
-            ml[1].Send(new Event(), 1, 0);
-
+            simEnv.Init();
             simEnv.Run();
         }
     }
