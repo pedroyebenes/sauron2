@@ -16,8 +16,17 @@ namespace Sauron2.Core
 
         public List<Connection> Gate { get; set; }
 
-        protected Module(string name, int gates)
+        void SetUp(string name, int gates)
         {
+            if (string.IsNullOrEmpty(name))
+            {
+                throw new ArgumentException("Name is null");
+            }
+            if(gates < 0)
+            {
+                throw new ArgumentException("The number of gates is < 0");
+            }
+
             ID = IDCount;
             IDCount += 1;
 
@@ -29,44 +38,47 @@ namespace Sauron2.Core
             }
         }
 
+        protected Module(string name, int gates)
+        {
+            SetUp(name, gates);
+        }
+
         protected Module(string jsonString)
         {
+            string name = "";
+            int gates = -1;
             JsonObject jo = (JsonObject)JsonValue.Parse(jsonString);
             if (jo.TryGetValue(nameof(Name), out JsonValue value))
             {
-                Name = (string)value;
+                name = (string)value;
             }
             if (jo.TryGetValue("Gates", out value))
             {
-                Gate = new List<Connection>(value);
-                for (int i = 0; i < value; i++)
-                {
-                    Gate.Add(null);
-                }
+                gates = (int)value;
             }
-            Console.WriteLine("Name: {0}, Gates: {1}", Name, Gate.Count);
+            Console.WriteLine(jsonString);
+            SetUp(name, gates);
+        }
+
+        void UpdateEvent(Event e, ulong time, Module srcModule, int srcPort, Module destModule, int destPort)
+        {
+            e.Time = time;
+            e.SrcModule = srcModule;
+            e.SrcPort = srcPort;
+            e.DestModule = destModule;
+            e.DestPort = destPort;
         }
 
         public void Send(Event e, int port, ulong time)
         {
-            e.Time = time;
-            e.SrcModule = this;
-            e.SrcPort = port;
-            e.DestModule = Gate[port].Module;
-            e.DestPort = Gate[port].Port;
-
-            SimEnvir.EventQueue.Add(e);
+            UpdateEvent(e, time, this, port, Gate[port].Module, Gate[port].Port);
+            SimEnvir.AddEvent(e);
         }
 
         public void ScheduleAt(Event e, ulong time)
         {
-            e.Time = time;
-            e.SrcModule = this;
-            e.SrcPort = -1;
-            e.DestModule = this;
-            e.DestPort = -1;
-
-            SimEnvir.EventQueue.Add(e);
+            UpdateEvent(e, time, this, -1, this, -1);
+            SimEnvir.AddEvent(e);
         }
 
         abstract public void Initialize();

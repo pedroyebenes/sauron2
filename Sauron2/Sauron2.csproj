@@ -54,6 +54,8 @@
     <Compile Include="Core\Module.cs" />
     <Compile Include="Core\SimulationEnvironment.cs" />
     <Compile Include="Node.cs" />
+    <Compile Include="Factory.cs" />
+    <Compile Include="Exceptions\UnknownModuleTypeException.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Tests\" />

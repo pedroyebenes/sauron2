@@ -13,15 +13,18 @@ namespace Sauron2.Tests
 {
     ""Modules"": [
         {
-                ""Name"": ""Sauron"", 
+            ""Name"": ""Sauron"", 
+            ""Type"": ""Node"", 
             ""Gates"": 2
         },
         {
-                ""Name"": ""Melkor"", 
+            ""Name"": ""Melkor"", 
+            ""Type"": ""Node"", 
             ""Gates"": 2
         },
         {
-                ""Name"": ""Iluvatar"", 
+            ""Name"": ""Iluvatar"", 
+            ""Type"": ""Node"", 
             ""Gates"": 2
         }
     ],

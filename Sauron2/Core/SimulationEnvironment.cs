@@ -6,7 +6,7 @@ namespace Sauron2.Core
 {
     public class SimulationEnvironment
     {
-        public EventQueue EventQueue { get; private set; }
+        readonly EventQueue EventQueue;
         public Dictionary<string, List<Module>> DictModules { get; }
         public ulong Time { get; private set; }
 
@@ -18,6 +18,11 @@ namespace Sauron2.Core
             DictModules = new Dictionary<string, List<Module>>();
             Time = 0;
             TopologyFileName = topologyFileName;
+        }
+
+        public void AddEvent(Event e)
+        {
+            EventQueue.Add(e);
         }
 
         public void Init()

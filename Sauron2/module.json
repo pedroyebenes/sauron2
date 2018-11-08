@@ -2,14 +2,17 @@
     "Modules": [
         {
             "Name": "Sauron", 
+            "Type": "Node", 
             "Gates": 2
         },
         {
             "Name": "Melkor", 
+            "Type": "Node", 
             "Gates": 2
         },
         {
             "Name": "Iluvatar", 
+            "Type": "Node", 
             "Gates": 2
         }
     ],

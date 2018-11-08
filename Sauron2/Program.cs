@@ -12,7 +12,7 @@ namespace Sauron2
         public static void Main(string[] args)
         {
             Console.WriteLine("Hail SAURON!");
-            SimulationEnvironment simEnv = new SimulationEnvironment("../../module1.json");
+            SimulationEnvironment simEnv = new SimulationEnvironment("../../module.json");
 
             simEnv.Init();
             simEnv.Run();

@@ -10,6 +10,7 @@ namespace Sauron2.Core
         const string ModuleKey = "Modules";
         const string ModuleName = "Name";
         const string ModuleGates = "Gates";
+        const string ModuleType = "Type";
 
         const string ConnectionKey = "Connections";
         const string ConnectionModuleA = "ModuleA";
@@ -57,10 +58,10 @@ namespace Sauron2.Core
         {
             JsonObject jo = (JsonObject)JsonValue.Parse(jsonString);
 
-            string name = (string)GetValueFromObject(jo, ModuleName);
+            string type = (string)GetValueFromObject(jo, ModuleType);
             int gates = (int)GetValueFromObject(jo, ModuleGates);
 
-            return new Node(name, gates); //TODO how does it know the type?
+            return Factory.GetModule(type, jsonString);
         }
 
         public List<Module> GetModules()
