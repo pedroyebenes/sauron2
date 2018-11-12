@@ -18,7 +18,7 @@ namespace Sauron2
 
         void SetDefaultValues()
         {
-            ConfigFileName = "../../config.json";
+            ConfigFileName = "../../Configurations/ThreeNodes/config.json";
             SilentMode = false;
         }
 

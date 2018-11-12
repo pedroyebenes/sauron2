@@ -1,0 +1,7 @@
+﻿{
+    "topology_file" : "../../Configurations/Ring/module1.json",
+    "parameters" :
+        {
+            "time_limit" : 100
+        }
+}

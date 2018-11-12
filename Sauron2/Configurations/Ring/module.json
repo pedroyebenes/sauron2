@@ -1,0 +1,28 @@
+﻿{
+    "Modules": [
+        {
+            "Name": "Sauron", 
+            "Number": 4,
+            "Type": "Node", 
+            "Gates": 2
+        }
+    ],
+    "Connections": [
+        { 
+            "ModuleA": "Sauron", "IndexA": 0, "PortA": 1, 
+            "ModuleB": "Sauron", "IndexB": 1, "PortB": 0
+        },
+        { 
+            "ModuleA": "Sauron", "IndexA": 1, "PortA": 1, 
+            "ModuleB": "Sauron", "IndexB": 2, "PortB": 0
+        },
+        { 
+            "ModuleA": "Sauron", "IndexA": 2, "PortA": 1, 
+            "ModuleB": "Sauron", "IndexB": 3, "PortB": 0
+        },
+        { 
+            "ModuleA": "Sauron", "IndexA": 3, "PortA": 1, 
+            "ModuleB": "Sauron", "IndexB": 0, "PortB": 0
+        }
+    ]
+}

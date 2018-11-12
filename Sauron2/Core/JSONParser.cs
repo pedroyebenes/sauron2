@@ -11,6 +11,7 @@ namespace Sauron2.Core
         const string ModuleName = "Name";
         const string ModuleGates = "Gates";
         const string ModuleType = "Type";
+        const string ModuleNumber = "Number";
 
         const string ConnectionKey = "Connections";
         const string ConnectionModuleA = "ModuleA";
@@ -63,8 +64,8 @@ namespace Sauron2.Core
         {
             JsonObject jo = (JsonObject)JsonValue.Parse(jsonString);
 
-            string type = (string)GetValueFromObjectOrDie(jo, ModuleType);
-            int gates = (int)GetValueFromObjectOrDie(jo, ModuleGates);
+            string type = GetValueFromObjectOrDie(jo, ModuleType);
+            int gates = GetValueFromObjectOrDie(jo, ModuleGates);
 
             return moduleFactory.CreateModule(type, jsonString);
         }
@@ -82,7 +83,12 @@ namespace Sauron2.Core
             {
                 foreach (JsonValue jm in jsonModules)
                 {
-                    ml.Add(CreateModule(jm.ToString(), moduleFactory));
+                    JsonObject jo = (JsonObject)JsonValue.Parse(jm.ToString());
+                    int number = jo.TryGetValue(ModuleNumber, out JsonValue value) ? (int)value : 1;
+                    for (int i = 0; i < number; i++)
+                    {
+                        ml.Add(CreateModule(jm.ToString(), moduleFactory));
+                    }
                 }
             }
 

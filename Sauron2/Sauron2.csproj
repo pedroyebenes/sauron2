@@ -70,10 +70,15 @@
     <Folder Include="Core\Tests\" />
     <Folder Include="Modules\Tests\" />
     <Folder Include="Core\UserInterfaces\" />
+    <Folder Include="Configurations\" />
+    <Folder Include="Configurations\Ring\" />
+    <Folder Include="Configurations\ThreeNodes\" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="module.json" />
-    <None Include="config.json" />
+    <None Include="Configurations\Ring\config.json" />
+    <None Include="Configurations\Ring\module.json" />
+    <None Include="Configurations\ThreeNodes\config.json" />
+    <None Include="Configurations\ThreeNodes\module.json" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>
