@@ -1,9 +1,5 @@
 ﻿using NUnit.Framework;
-using System;
-using Sauron2.Core;
-using Sauron2.Exceptions;
-
-namespace Sauron2.Tests
+namespace Sauron2.Core.Tests
 {
     [TestFixture()]
     public class ConnectionTest
@@ -33,7 +29,7 @@ namespace Sauron2.Tests
                 Connection.Connect(ma, 0, mb, 1);
                 Connection.Connect(ma, 0, mb, 1);
             }
-            catch (PortAlreadyConnectedException)
+            catch (Core.Exceptions.PortAlreadyConnectedException)
             {
                 exception = true; 
             }

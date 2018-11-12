@@ -4,6 +4,7 @@ using System.IO;
 using System.Json;
 
 using Sauron2.Core;
+using Sauron2.Modules;
 
 namespace Sauron2
 {
@@ -12,7 +13,8 @@ namespace Sauron2
         public static void Main(string[] args)
         {
             Console.WriteLine("Hail SAURON!");
-            SimulationEnvironment simEnv = new SimulationEnvironment("../../module.json");
+
+            SimulationEnvironment simEnv = new SimulationEnvironment("../../config.json", new ModuleFactory());
 
             simEnv.Init();
             simEnv.Run();

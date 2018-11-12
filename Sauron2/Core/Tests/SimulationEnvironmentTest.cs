@@ -1,9 +1,6 @@
 ﻿using NUnit.Framework;
-using System;
 
-using Sauron2.Core;
-
-namespace Sauron2.Tests
+namespace Sauron2.Core.Tests
 {
     [TestFixture()]
     public class SimulationEnvironmentTest
@@ -11,7 +8,7 @@ namespace Sauron2.Tests
         [Test()]
         public void TestAddGetModules()
         {
-            SimulationEnvironment simEnv = new SimulationEnvironment("");
+            SimulationEnvironment simEnv = new SimulationEnvironment("", null);
             simEnv.AddModule(new MockModule("m", 2));
             simEnv.AddModule(new MockModule("m", 2)); //Index 1
 

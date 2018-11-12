@@ -1,23 +1,29 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Json;
+﻿using System.Collections.Generic;
+using Sauron2.Core.UserInterfaces;
 
 namespace Sauron2.Core
 {
     public class SimulationEnvironment
     {
+        public IUserInterface UI { get; private set; }
+        public IModuleFactory ModuleFactory { get; private set; }
+
         readonly EventQueue EventQueue;
         public Dictionary<string, List<Module>> DictModules { get; }
+
         public ulong Time { get; private set; }
 
-        readonly string TopologyFileName;
+        readonly string ConfigurationFileNmae;
 
-        public SimulationEnvironment(string topologyFileName)
+        public SimulationEnvironment(string configFilename, IModuleFactory moduleFactory)
         {
             EventQueue = new EventQueue();
             DictModules = new Dictionary<string, List<Module>>();
+            UI = new CommnadLineInterface();
+            ModuleFactory = moduleFactory;
+
             Time = 0;
-            TopologyFileName = topologyFileName;
+            ConfigurationFileNmae = configFilename;
         }
 
         public void AddEvent(Event e)
@@ -27,9 +33,9 @@ namespace Sauron2.Core
 
         public void Init()
         {
-            JSONParser jp = new JSONParser(JSONParser.ReadJSONFile(TopologyFileName));
+            JSONParser jp = new JSONParser(JSONParser.ReadJSONFile(ConfigurationFileNmae));
 
-            List<Module> ml = jp.GetModules();
+            List<Module> ml = jp.GetModules(ModuleFactory);
             List<PreConnection> pl = jp.GetConnections();
 
             AddModules(ml);

@@ -1,9 +1,7 @@
 ﻿using NUnit.Framework;
 using System;
-using Sauron2.Core;
-using Sauron2.Exceptions;
 
-namespace Sauron2.Tests
+namespace Sauron2.Core.Tests
 {
     public class MockModule : Module
     {
@@ -63,28 +61,5 @@ namespace Sauron2.Tests
             Assert.True(exception);
         }
 
-        [Test()]
-        public void TestFactoryWrongtype()
-        {
-            bool exception = false;
-            try
-            {
-                Module m = Factory.GetModule("", @"{ ""Gates"": 5, ""Name"": ""Sauron"", ""Type"": """"}");
-            }
-            catch (UnknownModuleTypeException)
-            {
-                exception = true;
-            }
-            Assert.True(exception);
-        }
-
-        [Test()]
-        public void TestFactoryNode()
-        {
-            Module m = Factory.GetModule(nameof(Node), @"{ ""Gates"": 5, ""Name"": ""Sauron"", ""Type"": ""Node""}");
-            Assert.True(m.GetType().Name == nameof(Node));
-            Assert.True(m.Name == "Sauron");
-            Assert.True(m.Gate.Count == 5);
-        }
     }
 }

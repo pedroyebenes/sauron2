@@ -45,39 +45,49 @@ namespace Sauron2.Core
             return s;
         }
 
-        JsonValue GetValueFromObject(JsonObject jo, string key)
+        public static JsonValue GetValueFromObject(JsonObject jo, string key, string errorMsg = "")
         {
             if (!jo.TryGetValue(key, out JsonValue value))
             {
-                throw new Exceptions.JSONnotValidException("Unable to find the '" + ModuleKey + "' key in " + value);
+                if (errorMsg == "")
+                {
+                    errorMsg = "Unable to find the '" + key + "' key";
+                }
+
+                throw new Exceptions.JSONnotValidException(errorMsg);
             }
             return value;
         }
 
-        Module CreateModule(string jsonString)
+        Module CreateModule(string jsonString, IModuleFactory moduleFactory)
         {
             JsonObject jo = (JsonObject)JsonValue.Parse(jsonString);
 
             string type = (string)GetValueFromObject(jo, ModuleType);
             int gates = (int)GetValueFromObject(jo, ModuleGates);
 
-            return Factory.GetModule(type, jsonString);
+            return moduleFactory.CreateModule(type, jsonString);
         }
 
-        public List<Module> GetModules()
+        public List<Module> GetModules(IModuleFactory moduleFactory)
         {
             List<Module> ml = new List<Module>();
+
+            if (JSONFile.TryGetValue("topology_file", out JsonValue topologyFile))
+            {
+                JSONParser jSONParser = new JSONParser(JSONParser.ReadJSONFile((string)topologyFile));
+                ml.AddRange(jSONParser.GetModules(moduleFactory));
+            }
             if (JSONFile.TryGetValue(ModuleKey, out JsonValue jsonModules))
             {
                 foreach (JsonValue jm in jsonModules)
                 {
-                    ml.Add(CreateModule(jm.ToString()));
+                    ml.Add(CreateModule(jm.ToString(), moduleFactory));
                 }
             }
-            else
-            {
-                throw new Exceptions.JSONnotValidException("JSON file does not contain the '" + ModuleKey + "' key");
-            }
+
+            if (ml.Count == 0)
+                throw new Exceptions.JSONnotValidException("JSON file does not contain any modules");
 
             return ml;
         }
@@ -99,6 +109,11 @@ namespace Sauron2.Core
         {
             List<PreConnection> pl = new List<PreConnection>();
 
+            if (JSONFile.TryGetValue("topology_file", out JsonValue topologyFile))
+            {
+                JSONParser jSONParser = new JSONParser(JSONParser.ReadJSONFile((string)topologyFile));
+                pl.AddRange(jSONParser.GetConnections());
+            }
             if (JSONFile.TryGetValue(ConnectionKey, out JsonValue jsonConnections))
             {
                 foreach (JsonValue jm in jsonConnections)
@@ -106,10 +121,10 @@ namespace Sauron2.Core
                     pl.Add(CreatePreConnection(jm.ToString()));
                 }
             }
-            else
-            {
-                throw new Exceptions.JSONnotValidException("JSON file does not contain the '" + ConnectionKey + "' key");
-            }
+
+            if (pl.Count == 0)
+                throw new Exceptions.JSONnotValidException("JSON file does not contain any modules");
+
             return pl;
         }
     }

@@ -39,31 +39,38 @@
   <ItemGroup>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Tests\EventQueueTest.cs" />
-    <Compile Include="Exceptions\TimeException.cs" />
-    <Compile Include="Exceptions\PortAlreadyConnectedException.cs" />
-    <Compile Include="Tests\SimulationEnvironmentTest.cs" />
-    <Compile Include="Tests\ModuleTest.cs" />
-    <Compile Include="Exceptions\JSONnotValidException.cs" />
-    <Compile Include="Tests\JSONParserTest.cs" />
-    <Compile Include="Tests\ConnectionTest.cs" />
     <Compile Include="Core\Connection.cs" />
     <Compile Include="Core\Event.cs" />
     <Compile Include="Core\EventQueue.cs" />
     <Compile Include="Core\JSONParser.cs" />
     <Compile Include="Core\Module.cs" />
     <Compile Include="Core\SimulationEnvironment.cs" />
-    <Compile Include="Node.cs" />
-    <Compile Include="Factory.cs" />
-    <Compile Include="Exceptions\UnknownModuleTypeException.cs" />
+    <Compile Include="Modules\ModuleFactory.cs" />
+    <Compile Include="Modules\Node.cs" />
+    <Compile Include="Core\IModuleFactory.cs" />
+    <Compile Include="Core\Exceptions\JSONnotValidException.cs" />
+    <Compile Include="Core\Exceptions\PortAlreadyConnectedException.cs" />
+    <Compile Include="Core\Exceptions\TimeException.cs" />
+    <Compile Include="Core\Tests\ConnectionTest.cs" />
+    <Compile Include="Core\Tests\EventQueueTest.cs" />
+    <Compile Include="Core\Tests\JSONParserTest.cs" />
+    <Compile Include="Core\Tests\ModuleTest.cs" />
+    <Compile Include="Core\Tests\SimulationEnvironmentTest.cs" />
+    <Compile Include="Modules\Tests\FactoryTest.cs" />
+    <Compile Include="Core\UserInterfaces\CommnadLineInterface.cs" />
+    <Compile Include="Core\UserInterfaces\IUserInterface.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Tests\" />
-    <Folder Include="Exceptions\" />
     <Folder Include="Core\" />
+    <Folder Include="Modules\" />
+    <Folder Include="Core\Exceptions\" />
+    <Folder Include="Core\Tests\" />
+    <Folder Include="Modules\Tests\" />
+    <Folder Include="Core\UserInterfaces\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="module.json" />
+    <None Include="config.json" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

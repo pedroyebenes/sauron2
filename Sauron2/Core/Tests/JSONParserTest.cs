@@ -1,10 +1,8 @@
 ﻿using NUnit.Framework;
-using System;
 using System.Collections.Generic;
+using Sauron2.Modules;
 
-using Sauron2.Core;
-
-namespace Sauron2.Tests
+namespace Sauron2.Core.Tests
 {
     [TestFixture]
     public class JSONParserTest
@@ -54,7 +52,7 @@ namespace Sauron2.Tests
         [Test]
         public void TestGetModules()
         {
-            List<Module> ml = Jp.GetModules();
+            List<Module> ml = Jp.GetModules(new ModuleFactory());
 
             Assert.True(ml[0].Name == "Sauron");
             Assert.True(ml[0].Gate.Count == 2);

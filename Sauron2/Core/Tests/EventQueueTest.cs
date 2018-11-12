@@ -1,8 +1,7 @@
-﻿using NUnit.Framework;
-using System;
-using Sauron2.Core;
+﻿using System;
+using NUnit.Framework;
 
-namespace Sauron2.Tests
+namespace Sauron2.Core.Tests
 {
     [TestFixture()]
     public class EventQueueTest

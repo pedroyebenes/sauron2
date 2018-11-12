@@ -21,9 +21,9 @@ namespace Sauron2.Core
 
         public Event(ulong time, Module module, int port = -1)
         {
-            this.Time = time;
             this.ID = IDCount;
             IDCount += 1;
+            this.Time = time;
             this.SrcModule = module;
             this.SrcPort = port;
         }
