@@ -6,12 +6,10 @@ namespace Sauron2.Core.UserInterfaces
     public class CommnadLineInterface : IUserInterface
     {
         TextWriter ErrorWriter = Console.Error;
-        readonly Boolean Silent;
 
-        public CommnadLineInterface(bool silent = false)
+        public CommnadLineInterface()
         {
             ErrorWriter = Console.Error;
-            Silent = silent;
         }
         public void Error(string s)
         {
@@ -20,7 +18,7 @@ namespace Sauron2.Core.UserInterfaces
 
         public void Show(string s)
         {
-            if(!Silent) Console.WriteLine(s);
+            Console.WriteLine(s);
         }
 
         public void Warning(string s)

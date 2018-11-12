@@ -46,8 +46,8 @@ namespace Sauron2.Core
         protected Module(string jsonString)
         {
             JsonObject jo = (JsonObject)JsonValue.Parse(jsonString);
-            string name = (string)JSONParser.GetValueFromObject(jo, nameof(Name));
-            int gates = (int)JSONParser.GetValueFromObject(jo, "Gates");
+            string name = (string)JSONParser.GetValueFromObjectOrDie(jo, nameof(Name));
+            int gates = (int)JSONParser.GetValueFromObjectOrDie(jo, "Gates");
             SetUp(name, gates);
         }
 

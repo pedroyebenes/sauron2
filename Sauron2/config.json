@@ -1,0 +1,7 @@
+﻿{
+    "topology_file" : "../../module.json",
+    "parameters" :
+        {
+            "time_limit" : 100
+        }
+}

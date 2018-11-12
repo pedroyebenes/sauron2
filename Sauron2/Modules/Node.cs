@@ -28,13 +28,10 @@ namespace Sauron2.Modules
         public override void HandleEvent(Event e)
         {
             SimEnvir.UI.Show(string.Format("T={0} Module {1}_{2}, Port {3} -- Handling Event(id {4}, time {5})", SimEnvir.Time, Name, Index, e.DestPort, e.ID, e.Time));
-            if (SimEnvir.Time < 100)
-            {
-                Random r = new Random();
-                int port = GetRandom.Next(0, Gate.Count);
-                Send(e, port, SimEnvir.Time + 1);
-                Counter += 1;
-            }
+            Random r = new Random();
+            int port = GetRandom.Next(0, Gate.Count);
+            Send(e, port, SimEnvir.Time + 1);
+            Counter += 1;
         }
 
         public override void Finish()

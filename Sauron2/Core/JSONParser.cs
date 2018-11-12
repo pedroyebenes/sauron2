@@ -45,7 +45,7 @@ namespace Sauron2.Core
             return s;
         }
 
-        public static JsonValue GetValueFromObject(JsonObject jo, string key, string errorMsg = "")
+        public static JsonValue GetValueFromObjectOrDie(JsonObject jo, string key, string errorMsg = "")
         {
             if (!jo.TryGetValue(key, out JsonValue value))
             {
@@ -63,8 +63,8 @@ namespace Sauron2.Core
         {
             JsonObject jo = (JsonObject)JsonValue.Parse(jsonString);
 
-            string type = (string)GetValueFromObject(jo, ModuleType);
-            int gates = (int)GetValueFromObject(jo, ModuleGates);
+            string type = (string)GetValueFromObjectOrDie(jo, ModuleType);
+            int gates = (int)GetValueFromObjectOrDie(jo, ModuleGates);
 
             return moduleFactory.CreateModule(type, jsonString);
         }
@@ -95,12 +95,12 @@ namespace Sauron2.Core
         PreConnection CreatePreConnection(string jsonString)
         {
             JsonObject jo = (JsonObject)JsonValue.Parse(jsonString);
-            string moduleA = (string)GetValueFromObject(jo, ConnectionModuleA);
-            string moduleB = (string)GetValueFromObject(jo, ConnectionModuleB);
-            int portA = (int)GetValueFromObject(jo, ConnectionPortA);
-            int portB = (int)GetValueFromObject(jo, ConnectionPortB);
-            int indexA = (int)GetValueFromObject(jo, ConnectionIndexA);
-            int indexB = (int)GetValueFromObject(jo, ConnectionIndexB);
+            string moduleA = (string)GetValueFromObjectOrDie(jo, ConnectionModuleA);
+            string moduleB = (string)GetValueFromObjectOrDie(jo, ConnectionModuleB);
+            int portA = (int)GetValueFromObjectOrDie(jo, ConnectionPortA);
+            int portB = (int)GetValueFromObjectOrDie(jo, ConnectionPortB);
+            int indexA = (int)GetValueFromObjectOrDie(jo, ConnectionIndexA);
+            int indexB = (int)GetValueFromObjectOrDie(jo, ConnectionIndexB);
 
             return new PreConnection(moduleA, indexA, portA, moduleB, indexB, portB);
         }
@@ -126,6 +126,15 @@ namespace Sauron2.Core
                 throw new Exceptions.JSONnotValidException("JSON file does not contain any modules");
 
             return pl;
+        }
+
+        public SimulationParameters GetParameters()
+        {
+            if (JSONFile.TryGetValue("parameters", out JsonValue parameters))
+            {
+                return new SimulationParameters(parameters.ToString());
+            }
+            throw new Exceptions.JSONnotValidException("JSON file does not contain parameters");
         }
     }
 }

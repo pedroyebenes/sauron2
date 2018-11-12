@@ -59,6 +59,9 @@
     <Compile Include="Modules\Tests\FactoryTest.cs" />
     <Compile Include="Core\UserInterfaces\CommnadLineInterface.cs" />
     <Compile Include="Core\UserInterfaces\IUserInterface.cs" />
+    <Compile Include="ArgumentParser.cs" />
+    <Compile Include="Core\SimulationParameters.cs" />
+    <Compile Include="Core\Tests\SimulationParametersTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Core\" />

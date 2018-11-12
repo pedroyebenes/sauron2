@@ -8,7 +8,7 @@ namespace Sauron2.Core.Tests
         [Test()]
         public void TestAddGetModules()
         {
-            SimulationEnvironment simEnv = new SimulationEnvironment("", null);
+            SimulationEnvironment simEnv = new SimulationEnvironment("", null, null);
             simEnv.AddModule(new MockModule("m", 2));
             simEnv.AddModule(new MockModule("m", 2)); //Index 1
 

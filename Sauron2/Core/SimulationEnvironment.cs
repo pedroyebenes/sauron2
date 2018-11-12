@@ -8,22 +8,24 @@ namespace Sauron2.Core
         public IUserInterface UI { get; private set; }
         public IModuleFactory ModuleFactory { get; private set; }
 
+        public SimulationParameters Parameters { get; private set; }
+
         readonly EventQueue EventQueue;
         public Dictionary<string, List<Module>> DictModules { get; }
 
         public ulong Time { get; private set; }
 
-        readonly string ConfigurationFileNmae;
+        readonly string ConfigurationFileName;
 
-        public SimulationEnvironment(string configFilename, IModuleFactory moduleFactory)
+        public SimulationEnvironment(string configFilename, IModuleFactory moduleFactory, IUserInterface userInterface)
         {
             EventQueue = new EventQueue();
             DictModules = new Dictionary<string, List<Module>>();
-            UI = new CommnadLineInterface();
+            UI = userInterface;
             ModuleFactory = moduleFactory;
 
             Time = 0;
-            ConfigurationFileNmae = configFilename;
+            ConfigurationFileName = configFilename;
         }
 
         public void AddEvent(Event e)
@@ -33,8 +35,9 @@ namespace Sauron2.Core
 
         public void Init()
         {
-            JSONParser jp = new JSONParser(JSONParser.ReadJSONFile(ConfigurationFileNmae));
+            JSONParser jp = new JSONParser(JSONParser.ReadJSONFile(ConfigurationFileName));
 
+            Parameters = jp.GetParameters();
             List<Module> ml = jp.GetModules(ModuleFactory);
             List<PreConnection> pl = jp.GetConnections();
 
@@ -104,7 +107,7 @@ namespace Sauron2.Core
         public void Run()
         {
 
-            while (EventQueue.IsNotEmpty())
+            while (EventQueue.IsNotEmpty() && Time < Parameters.TimeLimit)
             {
                 Event e = EventQueue.GetNextEvent();
                 Time = e.Time;
