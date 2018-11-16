@@ -1,9 +1,12 @@
 ﻿using System;
+using System.IO;
+
 namespace Sauron2
 {
     public class ArgumentParser
     {
         readonly string[] Args;
+        public string ConfigPath { private set; get; }
         public string ConfigFileName { private set; get; }
         public bool SilentMode { private set; get; }
 
@@ -18,7 +21,8 @@ namespace Sauron2
 
         void SetDefaultValues()
         {
-            ConfigFileName = "../../Configurations/ThreeNodes/config.json";
+            ConfigPath = "../../Configurations/ThreeNodes";
+            ConfigFileName = "config.json";
             SilentMode = false;
         }
 
@@ -28,7 +32,7 @@ namespace Sauron2
             {
                 if (s == "-h" || s == "--help")
                 {
-                    Console.WriteLine("Prints help"); //TODO
+                    Console.WriteLine("Usage: Sauron.exe -c=ConfigurationFile.json [-s]"); //TODO
                     System.Environment.Exit(0);
                 }
             }
@@ -57,7 +61,8 @@ namespace Sauron2
             {
                 if (ParseArgument(s, "-c", out string value))
                 {
-                    ConfigFileName = value;
+                    ConfigPath = Path.GetDirectoryName(value);
+                    ConfigFileName = Path.GetFileName(value);
                 }
                 else if (s == "-s")
                 {

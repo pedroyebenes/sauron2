@@ -11,13 +11,13 @@ namespace Sauron2
 
         public static void Main(string[] args)
         {
-            //Console.WriteLine("Hail SAURON!");
             ArgumentParser ap = new ArgumentParser(args);
 
+            Environment.CurrentDirectory = ap.ConfigPath;
             SimulationEnvironment simEnv = new SimulationEnvironment(
-                ap.ConfigFileName,
-                new ModuleFactory(),
-                new CommnadLineInterface(ap.SilentMode));
+                                                  ap.ConfigFileName,
+                                                  new ModuleFactory(),
+                                                  new CommnadLineInterface(ap.SilentMode));
 
             simEnv.Init();
 

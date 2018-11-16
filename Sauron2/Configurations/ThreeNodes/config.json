@@ -1,5 +1,5 @@
 ﻿{
-    "topology_file" : "../../Configurations/ThreeNodes/module.json",
+    "topology_file" : "modules.json",
     "parameters" :
         {
             "time_limit" : 100

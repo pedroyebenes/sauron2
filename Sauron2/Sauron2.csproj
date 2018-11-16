@@ -76,9 +76,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Configurations\Ring\config.json" />
-    <None Include="Configurations\Ring\module.json" />
+    <None Include="Configurations\Ring\modules.json" />
     <None Include="Configurations\ThreeNodes\config.json" />
-    <None Include="Configurations\ThreeNodes\module.json" />
+    <None Include="Configurations\ThreeNodes\modules.json" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -31,6 +31,11 @@ namespace Sauron2.Core
         public static string ReadJSONFile(string fileName)
         {
             string s = null;
+
+
+            Console.WriteLine(Path.GetDirectoryName(fileName));
+
+
             try
             {
                 using (StreamReader r = new StreamReader(fileName))
