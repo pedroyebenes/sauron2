@@ -1,3 +1,9 @@
+# vim cache
+*.swp
+
+# python cache
+__pycache__/
+
 # Autosave files
 *~
 
